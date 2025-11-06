@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Checkout with Profile</title>
+<style>
+  body { font-family: Arial, sans-serif; margin: 20px; }
+  #checkout-popup {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    background: #f9f9f9;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    z-index: 1000;
+  }
+  #checkout-popup input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+  #checkout-popup button {
+    padding: 8px 12px;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  #overlay {
+    display: none;
+    position: fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: rgba(0,0,0,0.4);
+    z-index: 500;
+  }
+  h3 { margin-top: 30px; }
+</style>
+</head>
+<body>
+
+<h2>Product Page</h2>
+<p>Product: <strong>Sample Product</strong></p>
+<p>Price: <strong>₹100</strong></p>
+<button id="buy-now-btn">Buy Now</button>
+
+<!-- Overlay -->
+<div id="overlay"></div>
+
+<!-- Checkout Popup -->
+<div id="checkout-popup">
+  <h3>Enter Shipping Address</h3>
+  <input type="text" id="address" placeholder="Enter your address">
+  
+  <label>
+    <input type="radio" name="paymentMethod" value="COD" checked> Cash on Delivery
+  </label>
+  
+  <div style="margin-top: 10px;">
+    <button id="place-order-btn">Place Order</button>
+    <button id="cancel-btn">Cancel</button>
+  </div>
+</div>
+
+<h3>My Orders (Profile)</h3>
+<ul id="orders-list"></ul>
+
+<script>
+const buyNowBtn = document.getElementById('buy-now-btn');
+const checkoutPopup = document.getElementById('checkout-popup');
+const overlay = document.getElementById('overlay');
+const placeOrderBtn = document.getElementById('place-order-btn');
+const cancelBtn = document.getElementById('cancel-btn');
+const ordersList = document.getElementById('orders-list');
+
+// Example product details
+const product = {
+  name: 'Sample Product',
+  price: 100
+};
+
+// Show checkout popup on Buy Now
+buyNowBtn.addEventListener('click', () => {
+  checkoutPopup.style.display = 'block';
+  overlay.style.display = 'block';
+});
+
+// Cancel popup
+cancelBtn.addEventListener('click', () => {
+  checkoutPopup.style.display = 'none';
+  overlay.style.display = 'none';
+});
+
+// Place Order Handler
+placeOrderBtn.addEventListener('click', () => {
+  const address = document.getElementById('address').value.trim();
+  const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+
+  if(!address) {
+    alert('Please enter your address!');
+    return;
+  }
+
+  // Create order object
+  const order = {
+    product: product.name,
+    price: product.price,
+    address: address,
+    paymentMethod: paymentMethod,
+    date: new Date().toLocaleString()
+  };
+
+  // Save order to localStorage (simulate backend)
+  let orders = JSON.parse(localStorage.getItem('orders')) || [];
+  orders.push(order);
+  localStorage.setItem('orders', JSON.stringify(orders));
+
+  // Update orders in profile
+  displayOrders();
+
+  alert('Order Placed Successfully!');
+  checkoutPopup.style.display = 'none';
+  overlay.style.display = 'none';
+  document.getElementById('address').value = '';
+});
+
+// Display orders in profile
+function displayOrders() {
+  ordersList.innerHTML = '';
+  const orders = JSON.parse(localStorage.getItem('orders')) || [];
+  orders.forEach((order, index) => {
+    const li = document.createElement('li');
+    li.innerHTML = `<strong>${index+1}. ${order.product}</strong> - ₹${order.price}<br>
+                    Address: ${order.address}<br>
+                    Payment: ${order.paymentMethod}<br>
+                    Order Date: ${order.date}`;
+    ordersList.appendChild(li);
+  });
+}
+
+// Load orders on page load
+displayOrders();
+</script>
+
+</body>
+</html>

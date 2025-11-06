@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forgot Password | Gift Shoppe</title>
+  <link rel="stylesheet" href="auth.css">
+</head>
+<body>
+
+<section class="auth-section">
+  <h2>Reset Password</h2>
+
+  <form id="email-form">
+    <input type="email" id="email" placeholder="Enter your email" required>
+    <button type="submit">Send OTP</button>
+  </form>
+
+  <form id="otp-form" style="display:none;">
+    <input type="text" id="otp" placeholder="Enter OTP" required>
+    <button type="submit">Verify OTP</button>
+  </form>
+
+  <form id="reset-form" style="display:none;">
+    <input type="password" id="new-password" placeholder="New Password" required>
+    <button type="submit">Set New Password</button>
+  </form>
+</section>
+
+<script src="forgot.js"></script>
+</body>
+</html>

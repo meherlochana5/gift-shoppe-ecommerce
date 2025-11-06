@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile | Gift Shoppe</title>
+  <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+
+  <!-- Top Navbar -->
+  <header class="topbar">
+    <div class="logo">🎁 Gift Shoppe</div>
+    <nav class="profile-nav">
+      <span id="username-display"></span>
+      <a href="index.html">Home</a>
+      <button id="signout-btn">Sign Out</button>
+    </nav>
+  </header>
+
+  <!-- Profile Section -->
+  <section class="profile-section">
+    <h2>Welcome, <span id="username"></span>!</h2>
+
+    <h3>Your Cart Items</h3>
+    <div class="orders-grid" id="orders-grid">
+      <!-- Cart products will appear here -->
+    </div>
+
+    <div class="order-summary">
+      <p>Total Amount: ₹<span id="total-amount">0</span></p>
+      <button id="buy-now">Buy Now</button>
+    </div>
+    <h3>Placed Orders</h3>
+<div class="orders-grid" id="placed-orders-grid">
+  <!-- Placed orders will appear here -->
+</div>
+  </section>
+  
+
+
+  <script src="profile.js"></script>
+</body>
+</html>
